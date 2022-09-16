@@ -33,6 +33,13 @@ import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 #streamlit.text(fruityvice_response) <--displays response code 200 (replaced with the line below)
 #streamlit.text(fruityvice_response.json) <--also incorrect, needs to be as below
-streamlit.text(fruityvice_response.json())
+#streamlit.text(fruityvice_response.json()) <--this line will display json data, but we want it to be more readable
+
+# Line below takes the json version of the response and normalizes it (what ever it means)
+fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+# the line below displays the previously normalized data
+streamlit.dataframe(fruityvice_normalized)
+
+
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
