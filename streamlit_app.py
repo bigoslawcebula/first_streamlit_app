@@ -32,7 +32,7 @@ streamlit.header("Fruityvice Fruit Advice!")
 import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 #streamlit.text(fruityvice_response) <--displays response code 200 (replaced with the line below)
-streamlit.text(fruityvice_response.json)
-
+#streamlit.text(fruityvice_response.json) <--also incorrect, needs to be as below
+streamlit.text(fruityvice_response.json())
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
