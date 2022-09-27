@@ -152,7 +152,7 @@ streamlit.dataframe(my_data_row)
 ########################################################################################################################################################
 
 
-streamlit.stop()
+#streamlit.stop()
 
 
 # allowing a user to add a fruit to the list
