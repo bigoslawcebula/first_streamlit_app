@@ -47,7 +47,7 @@ streamlit.dataframe(fruityvice_normalized)
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ##pewnie laczy sie z uzyciem sekretow, ktore skonfigurowalismy w streamlit
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement
-#my_data_row = my_cur.fetchone()
+my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
 
