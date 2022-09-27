@@ -96,19 +96,20 @@ except URLError as e:
  
 
 
-### ADDING SNOWFLAKE
+################## ADDING SNOWFLAKE ##################
+
+#tworzymy funkcję, która wywołana naciśnięciem przycisku połączy się z naszym SNPWFLAKE urzywając sekretów zdefiniowanych w streamlit
+#a następnie wykona zapytanie select
+
 streamlit.header("The fruit load list contains:") #wypisujemy text na ekran
 
-### tworzymy funkcję, którą później sobie wywołąmy, będzie się ona nazywała get_fruit_load_list
+### tworzymy funkcję, którą później sobie wywołamy przyciskiem, będzie się ona nazywała get_fruit_load_list
 def get_fruit_load_list(): #zdefiniowanie funkcji o nazwie get_fruit_load_list
   with my_cnx.cursor() as my_cur: ### https://linuxhint.com/cursor-execute-python/ o kursorze i jeg funkcji w kodzie
        my_cur.execute("select * from fruit_load_list")
        return my_cur.fetchall()
 
-
-
-
-### dodajemy przycisk (on pewnie będzie wywołuwał funkcję???)
+### dodajemy przycisk (on właśnie będzie wywołuwał powyższą funkcję)
 if streamlit.button('Get Fruit Load List'): #jeżeli ktoś naciśnie przycisk (i tylko wtedy)
   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ###połączy się ze SNOWFLAKE z użyciem sekretów, które wcześniej skonfigurowalismy w streamlit, często jest to conn w kodzie (zamiast my_cnx)
   my_data_rows = get_fruit_load_list() # uruchamiamy wcześniej utworzoną / zdefiniowaną funkcje, i przypisujemy wartość, którą ta funkcja zwraca do zmiennej
@@ -118,35 +119,37 @@ if streamlit.button('Get Fruit Load List'): #jeżeli ktoś naciśnie przycisk (i
   
   
 
-####### TEMPORARY blocking the code from inserting rows int the table
-streamlit.stop()
-#######
+###kilka zapytań do SNOWFLAKE
   
-######################################
-my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement, ale chyba zdefiniowanie zapytania a nie uruchomienie (moge sie mylic)
-my_data_row = my_cur.fetchone()
-streamlit.text("Hello from Snowflake:")
-streamlit.text(my_data_row)
+########################################################################################################################################################
+#połączenie ze snowflake z wykorzystaniem sekretów zdefiniowanych wcześniej w stream lit
+conn = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_cursor = conn.cursor()
 
-# Inne zapytanie do Snowflake
-# kolejny raz prosimy Snowflake o dane
-my_cur.execute("select * from fruit_load_list")
+#1
+my_cursor.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement, ale chyba zdefiniowanie zapytania a nie uruchomienie (moge sie mylic)
+my_data_row = my_cur.fetchone() ###zapisze w zmiennej jeden wiersz z powyższego zapytania
+streamlit.text(my_data_row) ### wypisze zmienną na ekran
+
+#2
+my_cursor.execute("select * from fruit_load_list") ###wykonujemy inne zapytanie do na tabeli
 # poniższe chyba dopiero faktycznie pozyskuje dane i zapisuje w zmiennej, używająć powyżej zdefiniowanego query) --> https://pynative.com/python-cursor-fetchall-fetchmany-fetchone-to-read-rows-from-table/
 my_data_row = my_cur.fetchone()
 # wypisujemy dane:
-
 streamlit.text(my_data_row)
 
-# A teraz wypiszemy to samo, ale inaczej
-streamlit.header("The fruit load list contains:")
+# A teraz wypiszemy to samo, ale inaczej, czyli dataframe zamiast text
+streamlit.header("The fruit load list contains: {FETCHONE}")
 streamlit.dataframe(my_data_row)
 
-# jednach chcemy wszystkie wiersze nie tylko jeden, wiec użyjemy fetchall zamiast fetchone
+# jednak chcemy wszystkie wiersze nie tylko jeden, wiec użyjemy fetchall zamiast fetchone
 # w tym celu musimy na nowo pobrac dane i zapisać w zmienenj:
-my_data_row = my_cur.fetchall()
+my_data_row = my_cursor.fetchall()
 # a teraz jeszcze raz wypiszemy sobie te dane:
 streamlit.header("The fruit load list contains: {FETCHALL}")
 streamlit.dataframe(my_data_row)
+
+########################################################################################################################################################
 
 
 # allowing a user to add a fruit to the list
