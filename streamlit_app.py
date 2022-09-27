@@ -1,7 +1,7 @@
 # import - importuje biblioteki pythona
 import streamlit
 import pandas
-
+import snowflake.connector
 
 
 ###Generalnie, streamlit.title, .header, .text wypisuje na ekran pewne rzeczy
