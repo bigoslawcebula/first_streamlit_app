@@ -103,7 +103,7 @@ streamlit.header("The fruit load list contains:") #wypisujemy text na ekran
 def get_fruit_load_list(): #zdefiniowanie funkcji o nazwie get_fruit_load_list
   with my_cnx.cursor() as my_cur: ### https://linuxhint.com/cursor-execute-python/ o kursorze i jeg funkcji w kodzie
        my_cur.execute("select * from fruit_load_list")
-       return my_cut.fetchall()
+       return my_cur.fetchall()
 
 
 
