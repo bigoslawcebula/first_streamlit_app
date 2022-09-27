@@ -113,6 +113,7 @@ def get_fruit_load_list(): #zdefiniowanie funkcji o nazwie get_fruit_load_list
 if streamlit.button('Get Fruit Load List'): #jeżeli ktoś naciśnie przycisk (i tylko wtedy)
   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ###połączy się ze SNOWFLAKE z użyciem sekretów, które wcześniej skonfigurowalismy w streamlit, często jest to conn w kodzie (zamiast my_cnx)
   my_data_rows = get_fruit_load_list() # uruchamiamy wcześniej utworzoną / zdefiniowaną funkcje, i przypisujemy wartość, którą ta funkcja zwraca do zmiennej
+  my_cnx.close()
   streamlit.dataframe(my_data_rows) # wypisujemy tą zmienną
 
 ### fetchone(), fetchall(), fetchmany() (to metody klasy)
@@ -169,6 +170,7 @@ add_my_fruit = streamlit.text_input("What fruit would you like to add?", help="P
 if streamlit.button('Add a fruit to the list'): #jeżeli naciśniemy przycist
   connection = snowflake.connector.connect(**streamlit.secrets["snowflake"]) #połącz się ze SNOWFLAKE
   back_from_function = insert_row_snowflake(add_my_fruit)
+  connection.close()
   streamlit.text(back_from_function) # wypisze to co zwróci funkcja (bo ta wartośc została przypisana do zmiennej back_from_function - patrz jedna linie wyżej)
   
   
