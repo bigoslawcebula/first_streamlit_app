@@ -1,3 +1,7 @@
+### To jest GitHUB, czyli miejsce gdzie przechowywany jest kod. Natomiast nie jest on tutaj uruchomiony. Jest uruchomiany w streamlit, 
+### czyli platformie uruchomieniowej kodu napisanego chyba tylko w python, ma tez swoją własną biblioteke
+
+
 # import - importuje biblioteki pythona
 import streamlit
 import pandas
@@ -16,7 +20,7 @@ streamlit.text('🥑🍞 Avocado Toast')
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 
 
-#przy użyciu pandas, jesteśmy w stanie wczytać plik z URL (pandas.read_csv)
+#przy użyciu biblioteki pandas, jesteśmy w stanie wczytać plik z URL (pandas.read_csv) --> wiecej o pandas: https://analityk.edu.pl/python-pandas/
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 
 #Let's set the index to be "Fruit" column header (from the CSV file), instead of the default which appears to be row number of the table
@@ -57,28 +61,48 @@ streamlit.dataframe(fruits_to_show)
 
 
 ### WERSJA 3
-streamlit.header("Fruityvice Fruit Advice! -- ver 3")
+#streamlit.header("Fruityvice Fruit Advice!")
+#try:
+#  fruit_choice = streamlit.text_input('What fruit would you like information about?') ###pobieramy od użytkownika wartość
+#  if not fruit_choice:
+#    streamlit.error("Please select a fruit to get information.")
+#  else:  
+#    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ###wykonujemy API call z tą wartością
+#    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json()) ###normalizujemy wynik (cokolwiek to oznacza)
+#    streamlit.dataframe(fruityvice_normalized) ###wyświetlamy wyniok w formie tabeli
+
+#except URLError as e:
+#  streamlit.error()
+
+  
+ ### WERSJA 4 (z funkcją)
+def get_fruityvice_data(this_fruit_choice)
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ###wykonujemy API call z tą wartością
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json()) ###normalizujemy wynik (cokolwiek to oznacza)
+    return fruityvice_normalized #nie wiem co to robi, ale to pewnie jakies zakonczenie funkcji
+streamlit.header("Fruityvice Fruit Advice!")
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?') ###pobieramy od użytkownika wartość
   if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
   else:  
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ###wykonujemy API call z tą wartością
-    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json()) ###normalizujemy wynik (cokolwiek to oznacza)
-    streamlit.dataframe(fruityvice_normalized) ###wyświetlamy wyniok w formie tabeli
+    back_from_function = get_fruityvice_data(fruit_choice)
+    streamlit.dataframe(back_from_function) ###wyświetlamy wyniok w formie tabeli
 
 except URLError as e:
   streamlit.error()
+  
+ 
+ 
 
-
-#######
+####### TEMPORARY blocking the code from inserting rows int the table
 streamlit.stop()
 #######
 
 # ADDING SNOWFLAKE
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ##pewnie laczy sie z uzyciem sekretow, ktore skonfigurowalismy w streamlit
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ###łączy się z użyciem sekretów, które skonfigurowalismy w streamlit
+my_cur = my_cnx.cursor() ###to nie mam pojęcia co robi
+my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement, ale chyba zdefiniowanie zapytania a nie uruchomienie (moge sie mylic)
 my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
