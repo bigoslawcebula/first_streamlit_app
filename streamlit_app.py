@@ -76,6 +76,7 @@ streamlit.dataframe(my_data_row)
 add_my_fruit = streamlit.text_input("What fruit would you like to add?", help="Provide the fruit you would like to add and press enter")
 streamlit.write('Thanks for adding ', add_my_fruit)
 
-
+#adding values into snowflake
+my_cur.execute("insert into fruit_load_list values ('from streamlit')")
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
