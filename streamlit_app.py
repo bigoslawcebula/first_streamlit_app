@@ -3,6 +3,7 @@ import streamlit
 import pandas
 import snowflake.connector
 import requests
+from urllib.error import URLError
 
 ###Generalnie, streamlit.title, .header, .text wypisuje na ekran pewne rzeczy
 
