@@ -156,10 +156,25 @@ streamlit.stop()
 
 
 # allowing a user to add a fruit to the list
-add_my_fruit = streamlit.text_input("What fruit would you like to add?", help="Provide the fruit you would like to add and press enter")
-streamlit.write('Thanks for adding ', add_my_fruit)
 
-#adding values into snowflake
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+#poniżej jedynie definiujemy funkcję, którą odpali przycisk
+def insert_row_snowflake(new_fruit): #zdefiniowanie funkcji o nazwie insert_row_snowflake gdzie parametrem będzie new_fruit
+  with connection.cursor() as my_cur: # utworzenie kursora
+       my_cur.execute("insert into fruit_load_list values ('from streamlit')") #adding values into snowflake
+       return "Thanks for adding " + new_fruit
+#pole gdzie wpisujemy nazwę owocu do dodania i przypisanie tej nazwy do zmiennej add_my_fruit - zmiennej tej uzyjemy jako parametr funkcji
+add_my_fruit = streamlit.text_input("What fruit would you like to add?", help="Provide the fruit you would like to add and press enter")
+
+#warunek
+if streamlit.button('Add a fruit to the list'): #jeżeli naciśniemy przycist
+  connection = snowflake.connector.connect(**streamlit.secrets["snowflake"]) #połącz się ze SNOWFLAKE
+  back_from_function = insert_row_snowflake(add_my_fruit)
+  streamlit.text(back_from_function) # wypisze to co zwróci funkcja (bo ta wartośc została przypisana do zmiennej back_from_function - patrz jedna linie wyżej)
+  
+  
+
+
+
+
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
