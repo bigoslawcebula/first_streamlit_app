@@ -95,13 +95,31 @@ except URLError as e:
  
  
 
+
+### ADDING SNOWFLAKE
+streamlit.header("The fruit load list contains:") #wypisujemy text na ekran
+
+### tworzymy funkcję, którą później sobie wywołąmy, będzie się ona nazywała get_fruit_load_list
+def get_fruit_load_list(): #zdefiniowanie funkcji o nazwie get_fruit_load_list
+  with my_cnx.cursor() as my_cur ### https://linuxhint.com/cursor-execute-python/ (zdefiniowanie kursora)
+       my_cur.execute("select * from fruit_load_list")
+       return my_cut.fetchall()
+
+### dodajemy przycisk (on pewnie będzie wywołuwał funkcję???)
+if streamlit.button('Get Fruit Load List'): #jeżeli ktoś naciśnie przycisk (i tylko wtedy)
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ###połączy się ze SNOWFLAKE z użyciem sekretów, które wcześniej skonfigurowalismy w streamlit, często jest to conn w kodzie (zamiast my_cnx)
+  my_data_rows = get_fruit_load_list() # uruchamiamy wcześniej utworzoną / zdefiniowaną funkcje, i przypisujemy wartość, którą ta funkcja zwraca do zmiennej
+  streamlit.dataframe(my_data_rows) # wypisujemy tą zmienną
+
+### fetchone(), fetchall(), fetchmany() (to metody klasy)
+  
+  
+
 ####### TEMPORARY blocking the code from inserting rows int the table
 streamlit.stop()
 #######
-
-# ADDING SNOWFLAKE
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ###łączy się z użyciem sekretów, które skonfigurowalismy w streamlit
-my_cur = my_cnx.cursor() ###to nie mam pojęcia co robi
+  
+######################################
 my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement, ale chyba zdefiniowanie zapytania a nie uruchomienie (moge sie mylic)
 my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
@@ -113,7 +131,7 @@ my_cur.execute("select * from fruit_load_list")
 # poniższe chyba dopiero faktycznie pozyskuje dane i zapisuje w zmiennej, używająć powyżej zdefiniowanego query) --> https://pynative.com/python-cursor-fetchall-fetchmany-fetchone-to-read-rows-from-table/
 my_data_row = my_cur.fetchone()
 # wypisujemy dane:
-streamlit.text("The fruit load list contains:")
+
 streamlit.text(my_data_row)
 
 # A teraz wypiszemy to samo, ale inaczej
