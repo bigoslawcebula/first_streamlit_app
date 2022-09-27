@@ -74,7 +74,7 @@ streamlit.dataframe(my_data_row)
 
 # allowing a user to add a fruit to the list
 streamlit.text("What fruit would you like to add?")
-streamlit.text_input(label=str, value="What fruit would you like to add?", max_chars=50, key=str, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False, label_visibility="visible")
+add_my_fruit = streamlit.text_input(label=str, value="What fruit would you like to add?", max_chars=50, key=str, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False, label_visibility="visible")
 
 
 
