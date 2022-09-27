@@ -2,7 +2,7 @@
 import streamlit
 import pandas
 import snowflake.connector
-
+import requests
 
 ###Generalnie, streamlit.title, .header, .text wypisuje na ekran pewne rzeczy
 
@@ -30,7 +30,7 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
 
 streamlit.header("Fruityvice Fruit Advice!")
-import requests
+
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
 #streamlit.text(fruityvice_response) <--displays response code 200 (replaced with the line below)
 #streamlit.text(fruityvice_response.json) <--also incorrect, needs to be as below
@@ -42,6 +42,9 @@ fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # wyglada na to, ze streamlit.dataframe poprostu wyswietli dane jakie ma (np w zmiennej) jako TABELA
 streamlit.dataframe(fruityvice_normalized)
 
+#######
+streamlit.stop()
+#######
 
 # ADDING SNOWFLAKE
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ##pewnie laczy sie z uzyciem sekretow, ktore skonfigurowalismy w streamlit
