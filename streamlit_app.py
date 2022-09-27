@@ -43,5 +43,15 @@ fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 streamlit.dataframe(fruityvice_normalized)
 
 
+# ADDING SNOWFLAKE
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"]) ##pewnie laczy sie z uzyciem sekretow, ktore skonfigurowalismy w streamlit
+my_cur = my_cnx.cursor()
+my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement
+my_data_row = my_cur.fetchone()
+streamlit.text("Hello from Snowflake:")
+streamlit.text(my_data_row)
+
+
+
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
