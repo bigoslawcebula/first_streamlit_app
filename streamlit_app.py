@@ -31,39 +31,39 @@ fruits_to_show = my_fruit_list.loc[fruits_selected] ###nowa zmienna,
 streamlit.dataframe(fruits_to_show)
 
 
-###
+### WERSJA 1
 
 
-streamlit.header("Fruityvice Fruit Advice! -- ver 1")
-#pobieramy dane poprzez API i zapisujemy je w zmiennej
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
-#streamlit.text(fruityvice_response) <--displays response code 200 (replaced with the line below)
-#streamlit.text(fruityvice_response.json) <--also incorrect, needs to be as below
-#streamlit.text(fruityvice_response.json()) <--this line will display json data, but we want it to be more readable
+#streamlit.header("Fruityvice Fruit Advice! -- ver 1")
+###pobieramy dane poprzez API i zapisujemy je w zmiennej fruityvice_response, żeby potem z tej odpowiedzi serwera móc wyłuskiwać różne elementy
+#fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
+###streamlit.text(fruityvice_response) <--displays response code 200 (replaced with the line below)
+###streamlit.text(fruityvice_response.json) <--also incorrect, needs to be as below
+###streamlit.text(fruityvice_response.json()) <--this line will display json data, but we want it to be more readable
 
-# Line below takes the json version of the response and normalizes it (what ever it means --> https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html)
-# Normalizacja polega na zamiania semi-structured data (jak JSON) na dane znormalizowane, czyli w formie tabeli
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-# the line below displays the previously normalized data
-# wyglada na to, ze streamlit.dataframe poprostu wyswietli dane jakie ma (np w zmiennej) jako TABELA
-streamlit.dataframe(fruityvice_normalized)
+### Line below takes the json version of the response and normalizes it (what ever it means --> https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html)
+### Normalizacja polega na zamiania semi-structured data (jak JSON) na dane znormalizowane, czyli w formie tabeli
+#fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+### the line below displays the previously normalized data
+### wyglada na to, ze streamlit.dataframe poprostu wyswietli dane jakie ma (np w zmiennej) jako TABELA
+#streamlit.dataframe(fruityvice_normalized)
 
-streamlit.header("Fruityvice Fruit Advice! -- ver 2")
-###
-fruit_choice = streamlit.text_input("What fruit would you like information about?") ###pobieramy od użytkownika wartość
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ###wykonujemy API call z tą wartością
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json()) ###normalizujemy wynik (cokolwiek to oznacza)
-streamlit.dataframe(fruityvice_normalized) ###wyświetlamy wyniok w formie tabeli
+### WERSJA 2
+#streamlit.header("Fruityvice Fruit Advice! -- ver 2")
+#fruit_choice = streamlit.text_input("What fruit would you like information about?") ###pobieramy od użytkownika wartość
+#fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ###wykonujemy API call z tą wartością
+#fruityvice_normalized = pandas.json_normalize(fruityvice_response.json()) ###normalizujemy wynik (czyli semi-structured data zamieniamy na dane ustrukturyzowane)
+#streamlit.dataframe(fruityvice_normalized) ###wyświetlamy wynik w formie tabeli
 
 
-###
+### WERSJA 3
 streamlit.header("Fruityvice Fruit Advice! -- ver 3")
 try:
-  fruit_choice2 = streamlit.text_input('What fruit would you like information about?') ###pobieramy od użytkownika wartość
-  if not fruit_choice2:
+  fruit_choice = streamlit.text_input('What fruit would you like information about?') ###pobieramy od użytkownika wartość
+  if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
   else:  
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice2) ###wykonujemy API call z tą wartością
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ###wykonujemy API call z tą wartością
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json()) ###normalizujemy wynik (cokolwiek to oznacza)
     streamlit.dataframe(fruityvice_normalized) ###wyświetlamy wyniok w formie tabeli
 
