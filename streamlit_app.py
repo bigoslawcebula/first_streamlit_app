@@ -5,7 +5,7 @@
 # import - importuje biblioteki pythona
 import streamlit
 import pandas
-import snowflake.connector
+import snowflake.connector #trzeba to zaimportować, żeby się połączyć ze snowflake
 import requests
 from urllib.error import URLError
 
