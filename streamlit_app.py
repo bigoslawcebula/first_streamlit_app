@@ -51,7 +51,14 @@ my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
 
-
+# Inne zapytanie do Snowflake
+# kolejny raz prosimy Snowflake o dane
+my_cur.execute("select * from fruit_load_list")
+# poniższe chyba dopiero faktycznie pozyskuje dane i zapisuje w zmiennej, używająć powyżej zdefiniowanego query) --> https://pynative.com/python-cursor-fetchall-fetchmany-fetchone-to-read-rows-from-table/
+my_data_row = my_cur.fetchone()
+# wypisujemy dane:
+streamlit.text("The fruit load list contains:")
+streamlit.text(my_data_row)
 
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
