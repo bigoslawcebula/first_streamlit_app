@@ -64,5 +64,14 @@ streamlit.text(my_data_row)
 streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
 
+# jednach chcemy wszystkie wiersze nie tylko jeden, wiec użyjemy fetchall zamiast fetchone
+# w tym celu musimy na nowo pobrac dane i zapisać w zmienenj:
+my_data_row = my_cur.fetchall()
+# a teraz jeszcze raz wypiszemy sobie te dane:
+streamlit.header("The fruit load list contains:")
+streamlit.dataframe(my_data_row)
+
+
+
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
