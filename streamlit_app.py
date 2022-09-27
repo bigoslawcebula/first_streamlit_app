@@ -128,13 +128,13 @@ my_cursor = conn.cursor()
 
 #1
 my_cursor.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()") ##to juz wyglada na faktyczny statement, ale chyba zdefiniowanie zapytania a nie uruchomienie (moge sie mylic)
-my_data_row = my_cur.fetchone() ###zapisze w zmiennej jeden wiersz z powyższego zapytania
+my_data_row = my_cursor.fetchone() ###zapisze w zmiennej jeden wiersz z powyższego zapytania
 streamlit.text(my_data_row) ### wypisze zmienną na ekran
 
 #2
 my_cursor.execute("select * from fruit_load_list") ###wykonujemy inne zapytanie do na tabeli
 # poniższe chyba dopiero faktycznie pozyskuje dane i zapisuje w zmiennej, używająć powyżej zdefiniowanego query) --> https://pynative.com/python-cursor-fetchall-fetchmany-fetchone-to-read-rows-from-table/
-my_data_row = my_cur.fetchone()
+my_data_row = my_cursor.fetchone()
 # wypisujemy dane:
 streamlit.text(my_data_row)
 
