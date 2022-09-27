@@ -82,7 +82,7 @@ def get_fruityvice_data(this_fruit_choice)
     return fruityvice_normalized #nie wiem co to robi, ale to pewnie jakies zakonczenie funkcji
 streamlit.header("Fruityvice Fruit Advice!")
 try:
-  fruit_choice = streamlit.text_input('What fruit would you like information about?') ###pobieramy od użytkownika wartość
+  this_fruit_choice = streamlit.text_input('What fruit would you like information about?') ###pobieramy od użytkownika wartość
   if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
   else:  
