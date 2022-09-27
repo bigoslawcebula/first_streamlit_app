@@ -77,7 +77,7 @@ streamlit.dataframe(fruits_to_show)
   
  ### WERSJA 4 (z funkcją)
 def get_fruityvice_data(this_fruit_choice)
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ###wykonujemy API call z tą wartością
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice) ###wykonujemy API call z tą wartością
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json()) ###normalizujemy wynik (cokolwiek to oznacza)
     return fruityvice_normalized #nie wiem co to robi, ale to pewnie jakies zakonczenie funkcji
 streamlit.header("Fruityvice Fruit Advice!")
