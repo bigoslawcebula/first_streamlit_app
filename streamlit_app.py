@@ -72,6 +72,11 @@ streamlit.header("The fruit load list contains: {FETCHALL}")
 streamlit.dataframe(my_data_row)
 
 
+# allowing a user to add a fruit to the list
+streamlit.text("What fruit would you like to add?")
+streamlit.text_input(label, value="What fruit would you like to add?", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, *, placeholder=None, disabled=False, label_visibility="visible")
+
+
 
 
 ###URL to access it is: https://bigoslawcebula-first-streamlit-app-streamlit-app-xvr8gj.streamlitapp.com/
