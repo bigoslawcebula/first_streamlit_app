@@ -152,6 +152,9 @@ streamlit.dataframe(my_data_row)
 ########################################################################################################################################################
 
 
+streamlit.stop()
+
+
 # allowing a user to add a fruit to the list
 add_my_fruit = streamlit.text_input("What fruit would you like to add?", help="Provide the fruit you would like to add and press enter")
 streamlit.write('Thanks for adding ', add_my_fruit)
