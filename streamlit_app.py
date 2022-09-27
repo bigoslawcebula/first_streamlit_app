@@ -68,7 +68,7 @@ streamlit.dataframe(my_data_row)
 # w tym celu musimy na nowo pobrac dane i zapisać w zmienenj:
 my_data_row = my_cur.fetchall()
 # a teraz jeszcze raz wypiszemy sobie te dane:
-streamlit.header("The fruit load list contains:")
+streamlit.header("The fruit load list contains: {FETCHALL}")
 streamlit.dataframe(my_data_row)
 
 
