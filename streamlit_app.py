@@ -40,7 +40,8 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
 #streamlit.text(fruityvice_response.json) <--also incorrect, needs to be as below
 #streamlit.text(fruityvice_response.json()) <--this line will display json data, but we want it to be more readable
 
-# Line below takes the json version of the response and normalizes it (what ever it means)
+# Line below takes the json version of the response and normalizes it (what ever it means --> https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html)
+# Normalizacja polega na zamiania semi-structured data (jak JSON) na dane znormalizowane, czyli w formie tabeli
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # the line below displays the previously normalized data
 # wyglada na to, ze streamlit.dataframe poprostu wyswietli dane jakie ma (np w zmiennej) jako TABELA
