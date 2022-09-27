@@ -59,7 +59,7 @@ streamlit.dataframe(fruityvice_normalized) ###wyświetlamy wyniok w formie tabel
 ###
 streamlit.header("Fruityvice Fruit Advice! -- ver 3")
 try:
-fruit_choice2 = streamlit.text_input("What fruit would you like information about?") ###pobieramy od użytkownika wartość
+fruit_choice2 = streamlit.text_input('What fruit would you like information about?') ###pobieramy od użytkownika wartość
 if not fruit_choice2:
   streamlit.error("Please select a fruit to get information.")
 else:  
